@@ -9,7 +9,7 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegate {
 
     var window: UIWindow?
 
@@ -19,6 +19,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //UINavigationBar.appearance().barStyle = UIBarStyle.default
         //UINavigationBar.appearance().isTranslucent = true
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        
+        let nowPlayingNavigationController = storyboard.instantiateViewController(withIdentifier: "MoviesNavigationController") as! UINavigationController
+        nowPlayingNavigationController.title = "Now Playing Nav VC"
+        nowPlayingNavigationController.tabBarItem.image = UIImage(named: "now_playing_icon")
+        nowPlayingNavigationController.tabBarItem.title = "Now Playing"
+        
+        let nowPlayingViewController = nowPlayingNavigationController.topViewController as! MoviesViewController
+        nowPlayingViewController.endpointPath = theMovieDbNowPlayingPath
+        nowPlayingViewController.title = "Now Playing"
+        
+        let topRatedNavigationController = storyboard.instantiateViewController(withIdentifier: "MoviesNavigationController") as! UINavigationController
+        topRatedNavigationController.title = "Top Rated Nav VC"
+        topRatedNavigationController.tabBarItem.image = UIImage(named: "top_rated_icon")
+        topRatedNavigationController.tabBarItem.title = "Top Rated"
+        
+        let topRatedViewController = topRatedNavigationController.topViewController as! MoviesViewController
+        topRatedViewController.endpointPath = theMovieDbTopRatedPath
+        topRatedViewController.title = "Top Rated"
+        
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = [nowPlayingNavigationController, topRatedNavigationController]
+        tabBarController.delegate = self
+        
+
+        window?.rootViewController = tabBarController
+        window?.makeKeyAndVisible()
         
         return true
     }
@@ -46,5 +76,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
-}
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        dlog("vc: \(viewController.title)")
+    }
+
+ }
 

@@ -132,10 +132,10 @@
             </objects>
             <point key="canvasLocation" x="794.5" y="136.5"/>
         </scene>
-        <!--NowPlayingNavVC-->
+        <!--MoviesNavVC-->
         <scene sceneID="vbB-vO-f1v">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="bxE-Gy-ra0" userLabel="NowPlayingNavVC" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MoviesNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="bxE-Gy-ra0" userLabel="MoviesNavVC" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="0Lq-eZ-TfQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>

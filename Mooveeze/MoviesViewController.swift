@@ -15,13 +15,14 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     var jsonDownloader = JsonDownloader()
     var downloadTaskDict: [String:URLSessionDataTask] = [:]
     var nowPlayingArray: [MovieSummaryDTO] = []
+    var endpointPath: String = theMovieDbNowPlayingPath
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         jsonDownloader.delegate = self
         
-        let currentlyPlayingUrlString = theMovieDbSecureBaseUrl + theMovieDbNowPlayingPath + "?" + theMovieDbApiKeyParam
+        let currentlyPlayingUrlString = theMovieDbSecureBaseUrl + endpointPath + "?" + theMovieDbApiKeyParam
         
         cancelJsonDownloadTask(urlString: currentlyPlayingUrlString)
         if let task: URLSessionDataTask = jsonDownloader.doDownload(urlString: currentlyPlayingUrlString) {

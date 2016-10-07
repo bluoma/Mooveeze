@@ -158,7 +158,7 @@ public let theMovieDbBaseUrl = "https://api.themoviedb.org/3"
 public let theMovieDbSecureBaseUrl = "https://api.themoviedb.org/3"
 
 public let theMovieDbNowPlayingPath = "/movie/now_playing"
-public let theMovieDbTopRatedPath = "movie/top_rated"
+public let theMovieDbTopRatedPath = "/movie/top_rated"
 
 //https://api.themoviedb.org/3/movie/now_playing?api_key=d2f534caef1352faf672a1d1b1528999&language=en-US
 
