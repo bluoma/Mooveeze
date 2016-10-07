@@ -15,6 +15,7 @@
 		F780890A1DA7564F00438525 /* MoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78089091DA7564F00438525 /* MoviesViewController.swift */; };
 		F7A822491DA7630B00A680D8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A822481DA7630B00A680D8 /* Constants.swift */; };
 		F7A8224B1DA76E2900A680D8 /* JsonDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A8224A1DA76E2900A680D8 /* JsonDownloader.swift */; };
+		F7BA99281DA7EC3100636E6B /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = F7BA99271DA7EC3100636E6B /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		F78089091DA7564F00438525 /* MoviesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesViewController.swift; sourceTree = "<group>"; };
 		F7A822481DA7630B00A680D8 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F7A8224A1DA76E2900A680D8 /* JsonDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonDownloader.swift; sourceTree = "<group>"; };
+		F7BA99271DA7EC3100636E6B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 		F78088E91DA7560400438525 = {
 			isa = PBXGroup;
 			children = (
+				F7BA99271DA7EC3100636E6B /* README.md */,
 				F78088F41DA7560400438525 /* Mooveeze */,
 				F78088F31DA7560400438525 /* Products */,
 				5815FDB3A7F97CBFD296D71E /* Pods */,
@@ -243,6 +246,7 @@
 			files = (
 				F7A8224B1DA76E2900A680D8 /* JsonDownloader.swift in Sources */,
 				F78088F61DA7560400438525 /* AppDelegate.swift in Sources */,
+				F7BA99281DA7EC3100636E6B /* README.md in Sources */,
 				F780890A1DA7564F00438525 /* MoviesViewController.swift in Sources */,
 				F7A822491DA7630B00A680D8 /* Constants.swift in Sources */,
 			);
