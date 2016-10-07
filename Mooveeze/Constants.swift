@@ -27,6 +27,9 @@ public func dlog(_ message: String, _ filePath: String = #file, _ functionName: 
 }
 
 
+public let defaultAppearanceKey = "defaultAppearanceKey"
+
+
 //MARK: MovieApi
 /*
  You'll notice that movie, TV and person objects contain references to different file paths. In order to generate a fully working image URL, you'll need 3 pieces of data. Those pieces are a base_url, a file_size and a file_path.

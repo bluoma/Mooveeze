@@ -10,6 +10,7 @@
 		866398600FD80051D809473F /* Pods_Mooveeze.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E5C63C5BDF9AB445D21CA85 /* Pods_Mooveeze.framework */; };
 		F769F5141DA8162F00C56AFC /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F769F5131DA8162F00C56AFC /* MovieDetailViewController.swift */; };
 		F769F5171DA81EEC00C56AFC /* MovieSummaryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F769F5161DA81EEC00C56AFC /* MovieSummaryDTO.swift */; };
+		F77B8D8E1DA8475F002F0A1A /* AppearanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F77B8D8D1DA8475F002F0A1A /* AppearanceManager.swift */; };
 		F78088F61DA7560400438525 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78088F51DA7560400438525 /* AppDelegate.swift */; };
 		F78088FB1DA7560400438525 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F78088F91DA7560400438525 /* Main.storyboard */; };
 		F78088FD1DA7560400438525 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F78088FC1DA7560400438525 /* Assets.xcassets */; };
@@ -26,6 +27,7 @@
 		BCE217CC79B4A1553E05E21D /* Pods-Mooveeze.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mooveeze.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mooveeze/Pods-Mooveeze.debug.xcconfig"; sourceTree = "<group>"; };
 		F769F5131DA8162F00C56AFC /* MovieDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		F769F5161DA81EEC00C56AFC /* MovieSummaryDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieSummaryDTO.swift; sourceTree = "<group>"; };
+		F77B8D8D1DA8475F002F0A1A /* AppearanceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppearanceManager.swift; sourceTree = "<group>"; };
 		F78088F21DA7560400438525 /* Mooveeze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mooveeze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F78088F51DA7560400438525 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F78088FA1DA7560400438525 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 		F7A822471DA762FB00A680D8 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				F77B8D8D1DA8475F002F0A1A /* AppearanceManager.swift */,
 				F7A822481DA7630B00A680D8 /* Constants.swift */,
 				F7A8224A1DA76E2900A680D8 /* JsonDownloader.swift */,
 			);
@@ -265,6 +268,7 @@
 				F769F5171DA81EEC00C56AFC /* MovieSummaryDTO.swift in Sources */,
 				F780890A1DA7564F00438525 /* MoviesViewController.swift in Sources */,
 				F7BA992A1DA7FD5C00636E6B /* MovieSummaryTableViewCell.swift in Sources */,
+				F77B8D8E1DA8475F002F0A1A /* AppearanceManager.swift in Sources */,
 				F769F5141DA8162F00C56AFC /* MovieDetailViewController.swift in Sources */,
 				F7A822491DA7630B00A680D8 /* Constants.swift in Sources */,
 			);
