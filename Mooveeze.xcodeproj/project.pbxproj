@@ -7,21 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		866398600FD80051D809473F /* Pods_Mooveeze.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E5C63C5BDF9AB445D21CA85 /* Pods_Mooveeze.framework */; };
 		F78088F61DA7560400438525 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78088F51DA7560400438525 /* AppDelegate.swift */; };
-		F78088F81DA7560400438525 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78088F71DA7560400438525 /* ViewController.swift */; };
 		F78088FB1DA7560400438525 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F78088F91DA7560400438525 /* Main.storyboard */; };
 		F78088FD1DA7560400438525 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F78088FC1DA7560400438525 /* Assets.xcassets */; };
 		F78089001DA7560400438525 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F78088FE1DA7560400438525 /* LaunchScreen.storyboard */; };
+		F780890A1DA7564F00438525 /* MoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78089091DA7564F00438525 /* MoviesViewController.swift */; };
+		F7A822491DA7630B00A680D8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A822481DA7630B00A680D8 /* Constants.swift */; };
+		F7A8224B1DA76E2900A680D8 /* JsonDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A8224A1DA76E2900A680D8 /* JsonDownloader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		251A8439F2A4175BA9ACC81D /* Pods-Mooveeze.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mooveeze.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mooveeze/Pods-Mooveeze.release.xcconfig"; sourceTree = "<group>"; };
+		4E5C63C5BDF9AB445D21CA85 /* Pods_Mooveeze.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mooveeze.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BCE217CC79B4A1553E05E21D /* Pods-Mooveeze.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mooveeze.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mooveeze/Pods-Mooveeze.debug.xcconfig"; sourceTree = "<group>"; };
 		F78088F21DA7560400438525 /* Mooveeze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mooveeze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F78088F51DA7560400438525 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F78088F71DA7560400438525 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		F78088FA1DA7560400438525 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F78088FC1DA7560400438525 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F78088FF1DA7560400438525 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F78089011DA7560400438525 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F78089091DA7564F00438525 /* MoviesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesViewController.swift; sourceTree = "<group>"; };
+		F7A822481DA7630B00A680D8 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		F7A8224A1DA76E2900A680D8 /* JsonDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonDownloader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +37,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				866398600FD80051D809473F /* Pods_Mooveeze.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5815FDB3A7F97CBFD296D71E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BCE217CC79B4A1553E05E21D /* Pods-Mooveeze.debug.xcconfig */,
+				251A8439F2A4175BA9ACC81D /* Pods-Mooveeze.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		A764A239A91D918220678F61 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4E5C63C5BDF9AB445D21CA85 /* Pods_Mooveeze.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F78088E91DA7560400438525 = {
 			isa = PBXGroup;
 			children = (
 				F78088F41DA7560400438525 /* Mooveeze */,
 				F78088F31DA7560400438525 /* Products */,
+				5815FDB3A7F97CBFD296D71E /* Pods */,
+				A764A239A91D918220678F61 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +82,40 @@
 		F78088F41DA7560400438525 /* Mooveeze */ = {
 			isa = PBXGroup;
 			children = (
+				F7A822471DA762FB00A680D8 /* Utils */,
+				F78089081DA7562900438525 /* Views */,
+				F78089071DA7561900438525 /* ViewControllers */,
 				F78088F51DA7560400438525 /* AppDelegate.swift */,
-				F78088F71DA7560400438525 /* ViewController.swift */,
 				F78088F91DA7560400438525 /* Main.storyboard */,
 				F78088FC1DA7560400438525 /* Assets.xcassets */,
 				F78088FE1DA7560400438525 /* LaunchScreen.storyboard */,
 				F78089011DA7560400438525 /* Info.plist */,
 			);
 			path = Mooveeze;
+			sourceTree = "<group>";
+		};
+		F78089071DA7561900438525 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				F78089091DA7564F00438525 /* MoviesViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		F78089081DA7562900438525 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		F7A822471DA762FB00A680D8 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				F7A822481DA7630B00A680D8 /* Constants.swift */,
+				F7A8224A1DA76E2900A680D8 /* JsonDownloader.swift */,
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +125,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F78089041DA7560400438525 /* Build configuration list for PBXNativeTarget "Mooveeze" */;
 			buildPhases = (
+				BA0A06D58F2707C9D6AF5778 /* [CP] Check Pods Manifest.lock */,
 				F78088EE1DA7560400438525 /* Sources */,
 				F78088EF1DA7560400438525 /* Frameworks */,
 				F78088F01DA7560400438525 /* Resources */,
+				B5529F77B2B25A0F03DC27EC /* [CP] Embed Pods Frameworks */,
+				ED276E1E61E47EACA4DE3C66 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -131,13 +188,63 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		B5529F77B2B25A0F03DC27EC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Mooveeze/Pods-Mooveeze-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BA0A06D58F2707C9D6AF5778 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		ED276E1E61E47EACA4DE3C66 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Mooveeze/Pods-Mooveeze-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		F78088EE1DA7560400438525 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F78088F81DA7560400438525 /* ViewController.swift in Sources */,
+				F7A8224B1DA76E2900A680D8 /* JsonDownloader.swift in Sources */,
 				F78088F61DA7560400438525 /* AppDelegate.swift in Sources */,
+				F780890A1DA7564F00438525 /* MoviesViewController.swift in Sources */,
+				F7A822491DA7630B00A680D8 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +365,7 @@
 		};
 		F78089051DA7560400438525 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BCE217CC79B4A1553E05E21D /* Pods-Mooveeze.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Mooveeze/Info.plist;
@@ -270,6 +378,7 @@
 		};
 		F78089061DA7560400438525 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 251A8439F2A4175BA9ACC81D /* Pods-Mooveeze.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Mooveeze/Info.plist;
@@ -299,6 +408,7 @@
 				F78089061DA7560400438525 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
