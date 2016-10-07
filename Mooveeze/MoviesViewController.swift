@@ -14,7 +14,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var moviesTableView: UITableView!
     var jsonDownloader = JsonDownloader()
     var downloadTaskDict: [String:URLSessionDataTask] = [:]
-    var nowPlayingArray: [AnyObject] = []
+    var nowPlayingArray: [MovieSummaryDTO] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,12 +58,10 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         dlog("segue: \(segue.identifier) sender: \(sender)")
         
-        
         if let segueId = segue.identifier, segueId == "NowPlayingSummaryToDetailPushSegue" {
-            
-            let movieSummary = sender
-            
-            
+            let movieSummary: MovieSummaryDTO = sender as! MovieSummaryDTO
+            let destVc = segue.destination as! MovieDetailViewController
+            destVc.movieSummary = movieSummary
         }
     }
     
@@ -81,24 +79,13 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     @available(iOS 2.0, *)
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieSummaryCell") as! MovieSummaryTableViewCell
+        let movieSummary: MovieSummaryDTO = nowPlayingArray[indexPath.row]
+        cell.movieTitleLabel.text = movieSummary.title
+        cell.movieOverviewLabel.text = movieSummary.title
         
-        let movieSummary = nowPlayingArray[indexPath.row]
-        if let movieTitle = movieSummary["title"] as? String {
-            cell.movieTitleLabel.text = movieTitle
-        }
-        else {
-            cell.movieTitleLabel.text = "No Title"
-        }
-        if let movieOverview = movieSummary["overview"] as? String {
-            cell.movieOverviewLabel.text = movieOverview
-        }
-        else {
-            cell.movieOverviewLabel.text = "No Overview"
-        }
-        if let moviePosterPath = movieSummary["poster_path"] as? String {
-            let imageUrlString = theMovieDbSecureBaseImageUrl + "/" + poster_sizes[0] + moviePosterPath
+        if movieSummary.posterPath.characters.count > 0  {
+            let imageUrlString = theMovieDbSecureBaseImageUrl + "/" + poster_sizes[0] + movieSummary.posterPath
             let imageUrl = URL(string: imageUrlString)!
             let defaultImage = UIImage(named: "default_movie_thumbnail.png")
             cell.movieThumbnailImageView.setImageWith(_:imageUrl, placeholderImage: defaultImage)
@@ -123,7 +110,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         dlog("row: \(indexPath.row)")
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let movieSummary = nowPlayingArray[indexPath.row]
+        let movieSummary: MovieSummaryDTO = nowPlayingArray[indexPath.row]
         
         self.performSegue(withIdentifier: "NowPlayingSummaryToDetailPushSegue", sender: movieSummary)
     }
@@ -140,18 +127,18 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         else {
             dlog("got json")
             
-            
             if let jsonObj: [String:AnyObject]  = json,
                 let results: [AnyObject] = jsonObj["results"] as? [AnyObject] {
-                nowPlayingArray = results
-                moviesTableView.reloadData()
+                var resultsArray: [MovieSummaryDTO] = []
                 
-                for movieDict in results {
-                    
-                    dlog("movieDict: \(movieDict)")
-                    
-                    
+                for movieObj in results {
+                    let movieDict: NSDictionary = movieObj as! NSDictionary
+                    let movieDto: MovieSummaryDTO = MovieSummaryDTO(jsonDict: movieDict)
+                    dlog("movieDTO: \(movieDto)")
+                    resultsArray.append(movieDto)
                 }
+                nowPlayingArray = resultsArray
+                moviesTableView.reloadData()
             }
             else {
                 dlog("no json")

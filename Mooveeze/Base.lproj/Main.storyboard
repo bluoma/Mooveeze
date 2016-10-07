@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="bxE-Gy-ra0">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" colorMatched="YES" initialViewController="bxE-Gy-ra0">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -23,7 +23,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="96"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SBn-gF-AQh" id="P0D-uj-lZd">
-                                            <frame key="frameInset" width="342" height="95"/>
+                                            <frame key="frameInset" width="342" height="96"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" id="ad1-Wd-XrB" userLabel="ThumbIV">
@@ -67,6 +67,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="moviesTableView" destination="Cg7-ql-8AW" id="pGx-Pb-Ndq"/>
+                        <segue destination="Kvi-CK-HHs" kind="push" identifier="NowPlayingSummaryToDetailPushSegue" id="1c1-mp-b1W"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -80,13 +81,38 @@
                     <view key="view" contentMode="scaleToFill" id="4Mu-0B-nIz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" id="QY4-H9-gav" userLabel="BackdropIV">
+                                <frame key="frameInset" minY="58" width="375" height="609"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ilV-yi-cGj" userLabel="TitleLBL">
+                                <frame key="frameInset" minX="16" minY="133" width="343" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Overview" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sJe-1Y-VYe" userLabel="OverviewLBL">
+                                <frame key="frameInset" minX="16" minY="502" width="343" height="131"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Q3G-I1-HtL"/>
+                    <navigationItem key="navigationItem" title="Movie Details" id="Q3G-I1-HtL"/>
+                    <connections>
+                        <outlet property="backdropImageView" destination="QY4-H9-gav" id="x7M-Nv-VyR"/>
+                        <outlet property="overviewLabel" destination="sJe-1Y-VYe" id="VpA-ox-cHh"/>
+                        <outlet property="titleLabel" destination="ilV-yi-cGj" id="8CE-FU-5sc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D0l-M9-alL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="795" y="137"/>
+            <point key="canvasLocation" x="794.5" y="136.5"/>
         </scene>
         <!--NowPlayingNavVC-->
         <scene sceneID="vbB-vO-f1v">
