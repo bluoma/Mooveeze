@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		866398600FD80051D809473F /* Pods_Mooveeze.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4E5C63C5BDF9AB445D21CA85 /* Pods_Mooveeze.framework */; };
+		F769F5141DA8162F00C56AFC /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F769F5131DA8162F00C56AFC /* MovieDetailViewController.swift */; };
+		F769F5171DA81EEC00C56AFC /* MovieSummaryDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = F769F5161DA81EEC00C56AFC /* MovieSummaryDTO.swift */; };
 		F78088F61DA7560400438525 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78088F51DA7560400438525 /* AppDelegate.swift */; };
 		F78088FB1DA7560400438525 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F78088F91DA7560400438525 /* Main.storyboard */; };
 		F78088FD1DA7560400438525 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F78088FC1DA7560400438525 /* Assets.xcassets */; };
@@ -15,13 +17,15 @@
 		F780890A1DA7564F00438525 /* MoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78089091DA7564F00438525 /* MoviesViewController.swift */; };
 		F7A822491DA7630B00A680D8 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A822481DA7630B00A680D8 /* Constants.swift */; };
 		F7A8224B1DA76E2900A680D8 /* JsonDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7A8224A1DA76E2900A680D8 /* JsonDownloader.swift */; };
-		F7BA99281DA7EC3100636E6B /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = F7BA99271DA7EC3100636E6B /* README.md */; };
+		F7BA992A1DA7FD5C00636E6B /* MovieSummaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7BA99291DA7FD5C00636E6B /* MovieSummaryTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		251A8439F2A4175BA9ACC81D /* Pods-Mooveeze.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mooveeze.release.xcconfig"; path = "Pods/Target Support Files/Pods-Mooveeze/Pods-Mooveeze.release.xcconfig"; sourceTree = "<group>"; };
 		4E5C63C5BDF9AB445D21CA85 /* Pods_Mooveeze.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Mooveeze.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCE217CC79B4A1553E05E21D /* Pods-Mooveeze.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mooveeze.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Mooveeze/Pods-Mooveeze.debug.xcconfig"; sourceTree = "<group>"; };
+		F769F5131DA8162F00C56AFC /* MovieDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
+		F769F5161DA81EEC00C56AFC /* MovieSummaryDTO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieSummaryDTO.swift; sourceTree = "<group>"; };
 		F78088F21DA7560400438525 /* Mooveeze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mooveeze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F78088F51DA7560400438525 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F78088FA1DA7560400438525 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -32,6 +36,7 @@
 		F7A822481DA7630B00A680D8 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		F7A8224A1DA76E2900A680D8 /* JsonDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonDownloader.swift; sourceTree = "<group>"; };
 		F7BA99271DA7EC3100636E6B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		F7BA99291DA7FD5C00636E6B /* MovieSummaryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieSummaryTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +68,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F769F5151DA81EA200C56AFC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F769F5161DA81EEC00C56AFC /* MovieSummaryDTO.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		F78088E91DA7560400438525 = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +98,7 @@
 		F78088F41DA7560400438525 /* Mooveeze */ = {
 			isa = PBXGroup;
 			children = (
+				F769F5151DA81EA200C56AFC /* Models */,
 				F7A822471DA762FB00A680D8 /* Utils */,
 				F78089081DA7562900438525 /* Views */,
 				F78089071DA7561900438525 /* ViewControllers */,
@@ -101,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				F78089091DA7564F00438525 /* MoviesViewController.swift */,
+				F769F5131DA8162F00C56AFC /* MovieDetailViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -108,6 +123,7 @@
 		F78089081DA7562900438525 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F7BA99291DA7FD5C00636E6B /* MovieSummaryTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -246,8 +262,10 @@
 			files = (
 				F7A8224B1DA76E2900A680D8 /* JsonDownloader.swift in Sources */,
 				F78088F61DA7560400438525 /* AppDelegate.swift in Sources */,
-				F7BA99281DA7EC3100636E6B /* README.md in Sources */,
+				F769F5171DA81EEC00C56AFC /* MovieSummaryDTO.swift in Sources */,
 				F780890A1DA7564F00438525 /* MoviesViewController.swift in Sources */,
+				F7BA992A1DA7FD5C00636E6B /* MovieSummaryTableViewCell.swift in Sources */,
+				F769F5141DA8162F00C56AFC /* MovieDetailViewController.swift in Sources */,
 				F7A822491DA7630B00A680D8 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

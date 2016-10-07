@@ -10,7 +10,7 @@ import Foundation
 
 protocol JsonDownloaderDelegate: class {
     
-    func jsonDownloaderDidFinish(downloader: JsonDownloader, json: Any?, response: HTTPURLResponse, error: NSError?)
+    func jsonDownloaderDidFinish(downloader: JsonDownloader, json: [String:AnyObject]?, response: HTTPURLResponse, error: NSError?)
     
 }
 
@@ -33,7 +33,7 @@ class JsonDownloader {
         let dataTask = URLSession.shared.dataTask(with: url, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
         
             var returnedError: NSError? = nil
-            var json: Any? = nil
+            var json: [String:AnyObject]? = nil
             var statusCode: Int = 0;
             var contentType: String = ""
             var httpResp: HTTPURLResponse! = HTTPURLResponse(url: url, statusCode: statusCode, httpVersion: "1.1", headerFields: nil)
@@ -66,11 +66,11 @@ class JsonDownloader {
                 if (contentType.contains("json")) {
                     do {
                         // Convert NSData to Dictionary where keys are of type String, and values are of any type
-                        json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! [String:AnyObject]
+                        json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:AnyObject]
                         
                     }
                     catch let jerr as NSError {
-                        print("Error: \(jerr.domain)")
+                        dlog("json Error: \(jerr)")
                         returnedError = jerr
                     }
                 }
