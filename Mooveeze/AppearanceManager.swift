@@ -22,8 +22,9 @@ class AppearanceManager
         UINavigationBar.appearance().backIndicatorImage = UIImage(named: "backArrow")
         UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(named: "backArrowMask")
         
-        window?.tintColor = UIColor.cyan
+        window?.tintColor = UIColor(red: 40.0/255.0, green:180.0/255.0, blue: 180.0/255.0, alpha: 1.0)
 
+        //cyan: UIColor { get } // 0.0, 1.0, 1.0 RGB
         
     }
     
