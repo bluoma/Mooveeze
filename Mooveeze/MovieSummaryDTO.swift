@@ -81,12 +81,12 @@ class MovieSummaryDTO: CustomStringConvertible, CustomDebugStringConvertible {
     }
     
     var description: String {
-        return "id: \(movieId), title: \(title), postePath: \(posterPath), backdropPath: \(backdropPath)"
+        return "id: \(movieId), title: \(title), postePath: \(posterPath), backdropPath: \(backdropPath), overview: \(overview)"
     }
     
     var debugDescription: String {
         
-        return "id: \(movieId), title: \(title), postePath: \(posterPath), backdropPath: \(backdropPath)"
+        return "id: \(movieId), title: \(title), postePath: \(posterPath), backdropPath: \(backdropPath), overview: \(overview)"
     }
     
 }

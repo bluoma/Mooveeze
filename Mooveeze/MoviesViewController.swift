@@ -83,7 +83,13 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieSummaryCell") as! MovieSummaryTableViewCell
         let movieSummary: MovieSummaryDTO = nowPlayingArray[indexPath.row]
         cell.movieTitleLabel.text = movieSummary.title
-        cell.movieOverviewLabel.text = movieSummary.title
+        cell.movieOverviewLabel.text = movieSummary.overview
+        cell.movieOverviewLabel.sizeToFit()
+        let indexPath = IndexPath(row: 0, section: 0)
+        let maxOverviewLabelHeight = self.tableView(self.moviesTableView, heightForRowAt: indexPath) - cell.movieTitleLabel.frame.size.height + 3
+        if cell.movieOverviewLabel.frame.size.height > maxOverviewLabelHeight {
+            cell.movieOverviewLabel.frame.size.height = maxOverviewLabelHeight
+        }
         
         if movieSummary.posterPath.characters.count > 0  {
             let imageUrlString = theMovieDbSecureBaseImageUrl + "/" + poster_sizes[0] + movieSummary.posterPath

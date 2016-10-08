@@ -17,36 +17,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UITabBarControllerDelegat
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        //UINavigationBar.appearance().barStyle = UIBarStyle.default
-        //UINavigationBar.appearance().isTranslucent = true
-        
         window = UIWindow(frame: UIScreen.main.bounds)
+        AppearanceManager.applyBlackTranslucentTheme(window: window)
         
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         
         let nowPlayingNavigationController = storyboard.instantiateViewController(withIdentifier: "MoviesNavigationController") as! UINavigationController
-        nowPlayingNavigationController.title = "Now Playing Nav VC"
+        nowPlayingNavigationController.title = theMovieDbNowPlayingTitle + "Nav VC"
         nowPlayingNavigationController.tabBarItem.image = UIImage(named: "now_playing_icon")
-        nowPlayingNavigationController.tabBarItem.title = "Now Playing"
+        nowPlayingNavigationController.tabBarItem.title = theMovieDbNowPlayingTitle
         
         let nowPlayingViewController = nowPlayingNavigationController.topViewController as! MoviesViewController
         nowPlayingViewController.endpointPath = theMovieDbNowPlayingPath
-        nowPlayingViewController.title = "Now Playing"
+        nowPlayingViewController.title = theMovieDbNowPlayingTitle
         
         let topRatedNavigationController = storyboard.instantiateViewController(withIdentifier: "MoviesNavigationController") as! UINavigationController
-        topRatedNavigationController.title = "Top Rated Nav VC"
+        topRatedNavigationController.title = theMovieDbTopRatedTitle + "Nav VC"
         topRatedNavigationController.tabBarItem.image = UIImage(named: "top_rated_icon")
-        topRatedNavigationController.tabBarItem.title = "Top Rated"
+        topRatedNavigationController.tabBarItem.title = theMovieDbTopRatedTitle
         
         let topRatedViewController = topRatedNavigationController.topViewController as! MoviesViewController
         topRatedViewController.endpointPath = theMovieDbTopRatedPath
-        topRatedViewController.title = "Top Rated"
+        topRatedViewController.title = theMovieDbTopRatedTitle
         
         let tabBarController = UITabBarController()
         tabBarController.viewControllers = [nowPlayingNavigationController, topRatedNavigationController]
         tabBarController.delegate = self
         
-
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
         

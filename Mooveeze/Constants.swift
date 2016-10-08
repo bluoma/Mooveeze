@@ -162,7 +162,8 @@ public let theMovieDbTopRatedPath = "/movie/top_rated"
 
 //https://api.themoviedb.org/3/movie/now_playing?api_key=d2f534caef1352faf672a1d1b1528999&language=en-US
 
-
+public let theMovieDbNowPlayingTitle = "Now Playing"
+public let theMovieDbTopRatedTitle = "Top Rated"
 
 
 public let backdropSizes = [
