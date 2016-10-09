@@ -16,6 +16,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     var downloadTaskDict: [String:URLSessionDataTask] = [:]
     var nowPlayingArray: [MovieSummaryDTO] = []
     var endpointPath: String = theMovieDbNowPlayingPath
+    var isNetworkErrorShowing: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,6 +106,36 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
     }
     
+    /*
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        dlog("")
+        return "Now Network Error   X (close)"
+    }
+    */
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        dlog("isNetworkErrorShowing: \(isNetworkErrorShowing)")
+        if isNetworkErrorShowing {
+            
+            let v = UITableViewHeaderFooterView()
+            v.textLabel?.text = "Now Network Error   X (close)"
+            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+            //tapRecognizer.delegate = self
+            tapRecognizer.numberOfTapsRequired = 1
+            tapRecognizer.numberOfTouchesRequired = 1
+            v.addGestureRecognizer(tapRecognizer)
+            return v
+        }
+        return nil
+    }
+    
+    func handleTap(gestureRecognizer: UIGestureRecognizer)
+    {
+        dlog("Header Tapped")
+        isNetworkErrorShowing = !isNetworkErrorShowing
+        moviesTableView.reloadData()
+    }
+    
     
     //MARK: - UITableViewDelegate
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
@@ -123,6 +154,23 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
 
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        dlog("");
+        if isNetworkErrorShowing {
+            return 44.0;
+        }
+        return 0.0
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        dlog("")
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplayingHeaderView view: UIView, forSection section: Int) {
+        dlog("")
+    }
+    
+    
     //MARK: - JsonDownloader
     func jsonDownloaderDidFinish(downloader: JsonDownloader, json: [String:AnyObject]?, response: HTTPURLResponse, error: NSError?)
     {
@@ -130,6 +178,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
 
         if error != nil {
             dlog("err: \(error)")
+            isNetworkErrorShowing = true
+            moviesTableView.reloadData()
         }
         else {
             dlog("got json")
@@ -145,10 +195,13 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                     resultsArray.append(movieDto)
                 }
                 nowPlayingArray = resultsArray
+                isNetworkErrorShowing = false
                 moviesTableView.reloadData()
             }
             else {
                 dlog("no json")
+                isNetworkErrorShowing = true
+                moviesTableView.reloadData()
             }
         }
         if let urlString = response.url?.absoluteString {
