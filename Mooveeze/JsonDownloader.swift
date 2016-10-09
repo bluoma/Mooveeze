@@ -16,8 +16,16 @@ protocol JsonDownloaderDelegate: class {
 
 class JsonDownloader {
     
-    
+    var session: URLSession! = nil
     weak var delegate: JsonDownloaderDelegate? = nil
+    
+    init() {
+        
+        let urlconfig = URLSessionConfiguration.default
+        urlconfig.timeoutIntervalForRequest = 12
+        urlconfig.timeoutIntervalForResource = 12
+        self.session = URLSession(configuration: urlconfig, delegate: nil, delegateQueue: nil)
+    }
     
     func doDownload(urlString: String) -> URLSessionDataTask?
     {
@@ -30,7 +38,7 @@ class JsonDownloader {
         dlog("in url: \(urlString)")
 
         
-        let dataTask = URLSession.shared.dataTask(with: url, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
+        let dataTask = session.dataTask(with: url, completionHandler: { (data: Data?, response: URLResponse?, error: Error?) -> Void in
         
             var returnedError: NSError? = nil
             var json: [String:AnyObject]? = nil

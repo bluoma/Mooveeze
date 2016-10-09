@@ -17,20 +17,18 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     var nowPlayingArray: [MovieSummaryDTO] = []
     var endpointPath: String = theMovieDbNowPlayingPath
     var isNetworkErrorShowing: Bool = false
+    var header = UITableViewHeaderFooterView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(gestureRecognizer:)))
+        tapRecognizer.numberOfTapsRequired = 1
+        tapRecognizer.numberOfTouchesRequired = 1
+        header.addGestureRecognizer(tapRecognizer)
+        
         jsonDownloader.delegate = self
-        
-        let currentlyPlayingUrlString = theMovieDbSecureBaseUrl + endpointPath + "?" + theMovieDbApiKeyParam
-        
-        cancelJsonDownloadTask(urlString: currentlyPlayingUrlString)
-        if let task: URLSessionDataTask = jsonDownloader.doDownload(urlString: currentlyPlayingUrlString) {
-            UIApplication.shared.isNetworkActivityIndicatorVisible = true
-            downloadTaskDict[currentlyPlayingUrlString] = task
-        }
-        
+        doDownload()
     }
 
     override func didReceiveMemoryWarning() {
@@ -106,25 +104,11 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
     }
     
-    /*
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        dlog("")
-        return "Now Network Error   X (close)"
-    }
-    */
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         dlog("isNetworkErrorShowing: \(isNetworkErrorShowing)")
         if isNetworkErrorShowing {
-            
-            let v = UITableViewHeaderFooterView()
-            v.textLabel?.text = "Now Network Error   X (close)"
-            let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-            //tapRecognizer.delegate = self
-            tapRecognizer.numberOfTapsRequired = 1
-            tapRecognizer.numberOfTouchesRequired = 1
-            v.addGestureRecognizer(tapRecognizer)
-            return v
+            return header
         }
         return nil
     }
@@ -164,6 +148,10 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         dlog("")
+        header.textLabel?.text = "Sorry, there was a network error"
+        header.textLabel?.textColor = UIColor.red
+        header.textLabel?.font = UIFont.boldSystemFont(ofSize: 12)
+        header.textLabel?.textAlignment = NSTextAlignment.center
     }
     
     func tableView(_ tableView: UITableView, didEndDisplayingHeaderView view: UIView, forSection section: Int) {
@@ -172,6 +160,17 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     
     //MARK: - JsonDownloader
+    
+    func doDownload() {
+        let currentlyPlayingUrlString = theMovieDbSecureBaseUrl + endpointPath + "?" + theMovieDbApiKeyParam
+        cancelJsonDownloadTask(urlString: currentlyPlayingUrlString)
+        if let task: URLSessionDataTask = jsonDownloader.doDownload(urlString: currentlyPlayingUrlString) {
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
+            downloadTaskDict[currentlyPlayingUrlString] = task
+        }
+
+    }
+    
     func jsonDownloaderDidFinish(downloader: JsonDownloader, json: [String:AnyObject]?, response: HTTPURLResponse, error: NSError?)
     {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
