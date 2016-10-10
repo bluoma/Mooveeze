@@ -21,6 +21,9 @@ class MovieSummaryTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        selectionStyle = .default
+        selectedBackgroundView = UIView(frame: frame)
+        selectedBackgroundView?.backgroundColor = UIColor(red: 0.5, green: 0.7, blue: 0.9, alpha: 0.8)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -28,5 +31,11 @@ class MovieSummaryTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        super.setHighlighted(highlighted, animated: animated)
+      
+    }
+
 
 }
