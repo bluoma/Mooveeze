@@ -16,6 +16,8 @@ class MovieSummaryTableViewCell: UITableViewCell {
     
     @IBOutlet weak var movieOverviewLabel: UILabel!
     
+    var moviePosterUrlString: String!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

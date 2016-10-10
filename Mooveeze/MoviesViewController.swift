@@ -93,7 +93,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         else {
             movieSummary = moviesArray[indexPath.row]
         }
-
+        cell.movieThumbnailImageView.image = nil
         cell.movieTitleLabel.text = movieSummary.title
         cell.movieOverviewLabel.text = movieSummary.overview
         cell.movieOverviewLabel.sizeToFit()
@@ -105,9 +105,41 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         if movieSummary.posterPath.characters.count > 0  {
             let imageUrlString = theMovieDbSecureBaseImageUrl + "/" + poster_sizes[0] + movieSummary.posterPath
-            let imageUrl = URL(string: imageUrlString)!
-            let defaultImage = UIImage(named: "default_movie_thumbnail.png")
-            cell.movieThumbnailImageView.setImageWith(_:imageUrl, placeholderImage: defaultImage)
+            if let imageUrl = URL(string: imageUrlString) {
+                let defaultImage = UIImage(named: "default_movie_thumbnail.png")
+                //cell.movieThumbnailImageView.setImageWith(_:imageUrl, placeholderImage: defaultImage)
+                let urlRequest: URLRequest = URLRequest(url:imageUrl)
+                cell.moviePosterUrlString = imageUrlString
+                cell.movieThumbnailImageView.setImageWith(_:urlRequest, placeholderImage: nil,
+                    success: { (request: URLRequest, response:HTTPURLResponse?, image: UIImage) -> Void in
+                        dlog("got image: \(image) for indexPath: \(indexPath), response: \(response)")
+                        if imageUrlString == cell.moviePosterUrlString {
+                            //if response == nil, image came from cache
+                            if (response != nil) {
+                                cell.movieThumbnailImageView.alpha = 0.0;
+                                cell.movieThumbnailImageView.image = image
+                                UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                                    cell.movieThumbnailImageView.alpha = 1.0
+                                })
+                            }
+                            else {
+                                cell.movieThumbnailImageView.image = image
+                            }
+                        }
+                        else {
+                            dlog("our cell might have been recycled before the image returned, skip")
+                        }
+                    },
+                    failure: { (request: URLRequest, response: HTTPURLResponse?, error: Error) -> Void in
+                        dlog("image fetch failed: \(error) for indexPath: \(indexPath)")
+                        cell.movieThumbnailImageView.image = defaultImage
+                    })
+            }
+            else {
+                dlog("bad url: \(imageUrlString)")
+                let defaultImage = UIImage(named: "default_movie_thumbnail.png")
+                cell.movieThumbnailImageView.image = defaultImage
+            }
         }
         else {
             let defaultImage = UIImage(named: "default_movie_thumbnail.png")
@@ -186,6 +218,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         dlog("searchText: \(searchText)")
+        
         if searchText.characters.count == 0 {
             searchActive = false
             moviesTableView.reloadData()
