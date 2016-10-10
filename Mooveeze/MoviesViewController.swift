@@ -9,15 +9,19 @@
 import UIKit
 import AFNetworking
 
-class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, JsonDownloaderDelegate {
+class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, JsonDownloaderDelegate {
 
     @IBOutlet weak var moviesTableView: UITableView!
+    @IBOutlet weak var moviesSearchBar: UISearchBar!
+    
     var jsonDownloader = JsonDownloader()
     var downloadTaskDict: [String:URLSessionDataTask] = [:]
-    var nowPlayingArray: [MovieSummaryDTO] = []
+    var moviesArray: [MovieSummaryDTO] = []
     var endpointPath: String = theMovieDbNowPlayingPath
     var isNetworkErrorShowing: Bool = false
     var header = UITableViewHeaderFooterView()
+    var searchActive = false
+    var filteredMoviesArray: [MovieSummaryDTO] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,8 +73,10 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     //MARK: - UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-    {
-        return nowPlayingArray.count
+    {   if searchActive {
+            return filteredMoviesArray.count
+        }
+        return moviesArray.count
     }
     
     // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
@@ -80,7 +86,14 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieSummaryCell") as! MovieSummaryTableViewCell
-        let movieSummary: MovieSummaryDTO = nowPlayingArray[indexPath.row]
+        var movieSummary: MovieSummaryDTO! = nil
+        if searchActive {
+            movieSummary = filteredMoviesArray[indexPath.row]
+        }
+        else {
+            movieSummary = moviesArray[indexPath.row]
+        }
+
         cell.movieTitleLabel.text = movieSummary.title
         cell.movieOverviewLabel.text = movieSummary.overview
         cell.movieOverviewLabel.sizeToFit()
@@ -132,8 +145,13 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         dlog("row: \(indexPath.row)")
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let movieSummary: MovieSummaryDTO = nowPlayingArray[indexPath.row]
-        
+        var movieSummary: MovieSummaryDTO! = nil
+        if searchActive {
+            movieSummary = filteredMoviesArray[indexPath.row]
+        }
+        else {
+            movieSummary = moviesArray[indexPath.row]
+        }
         self.performSegue(withIdentifier: "NowPlayingSummaryToDetailPushSegue", sender: movieSummary)
     }
     
@@ -158,6 +176,48 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         dlog("")
     }
     
+    //MARK: - UISearchBarDelegate
+    /*
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        dlog("")
+        searchActive = true
+    }
+    */
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        dlog("searchText: \(searchText)")
+        if searchText.characters.count == 0 {
+            searchActive = false
+            moviesTableView.reloadData()
+        }
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        dlog("searchBarText: \(searchBar.text)")
+        searchBar.endEditing(true)
+        
+        filteredMoviesArray = moviesArray.filter({ (movie) -> Bool in
+            if let searchText = searchBar.text {
+                let range = movie.overview.range(of: searchText, options: .caseInsensitive)
+                return range != nil
+            }
+            return false
+        })
+        if (filteredMoviesArray.count == 0){
+            searchActive = false;
+        }
+        else {
+            searchActive = true;
+        }
+        moviesTableView.reloadData()
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        dlog("")
+        searchBar.endEditing(true)
+        searchActive = false
+        moviesTableView.reloadData()
+    }
     
     //MARK: - JsonDownloader
     
@@ -193,7 +253,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                     dlog("movieDTO: \(movieDto)")
                     resultsArray.append(movieDto)
                 }
-                nowPlayingArray = resultsArray
+                moviesArray = resultsArray
                 isNetworkErrorShowing = false
                 moviesTableView.reloadData()
             }
