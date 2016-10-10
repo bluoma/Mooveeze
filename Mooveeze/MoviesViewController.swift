@@ -198,7 +198,8 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         filteredMoviesArray = moviesArray.filter({ (movie) -> Bool in
             if let searchText = searchBar.text {
-                let range = movie.overview.range(of: searchText, options: .caseInsensitive)
+                let pattern = "\\b" + searchText + "\\b"
+                let range = movie.overview.range(of: pattern, options: [.caseInsensitive, .regularExpression])
                 return range != nil
             }
             return false
