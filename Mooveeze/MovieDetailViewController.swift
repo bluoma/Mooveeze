@@ -33,15 +33,42 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate {
         
         if movieSummary.posterPath.characters.count > 0  {
             let imageUrlString = theMovieDbSecureBaseImageUrl + "/" + poster_sizes[4] + movieSummary.posterPath
-            let imageUrl = URL(string: imageUrlString)!
-            let defaultImage = UIImage(named: "default_poster_image.png")
-            backdropImageView.setImageWith(_:imageUrl, placeholderImage: defaultImage)
+            if let imageUrl = URL(string: imageUrlString) {
+                let defaultImage = UIImage(named: "default_poster_image.png")
+                let urlRequest: URLRequest = URLRequest(url:imageUrl)
+                
+                backdropImageView.setImageWith(_:urlRequest, placeholderImage: nil,
+                    success: { (request: URLRequest, response:HTTPURLResponse?, image: UIImage) -> Void in
+                        if (response != nil) {
+                            self.backdropImageView.alpha = 0.0;
+                            self.backdropImageView.image = image
+                            UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                                self.backdropImageView.alpha = 1.0
+                            })
+                        }
+                        else {
+                            self.backdropImageView.image = image
+                        }
+                        
+                    },
+                    failure: { (request: URLRequest, response: HTTPURLResponse?, error: Error) -> Void in
+                        dlog("image fetch failed: \(error) for indexPath: \(imageUrlString)")
+                        self.backdropImageView.image = defaultImage
+                })
+            }
+            else {
+                dlog("bad url for image: \(imageUrlString)")
+                let defaultImage = UIImage(named: "default_poster_image.png")
+                self.backdropImageView.image = defaultImage
+            }
         }
         else {
+            dlog("no url for posterPath: \(movieSummary.posterPath)")
             let defaultImage = UIImage(named: "default_poster_image.png")
-            backdropImageView.image = defaultImage
+            self.backdropImageView.image = defaultImage
         }
-
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
