@@ -60,8 +60,8 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate {
     }
     */
 
-    
-    //MARK: - UIScrollview
+        
+    //MARK: - UIScrollViewDelegate
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         //dlog("contentSize: \(scrollView.contentSize), contentOffset: \(scrollView.contentOffset)")
     }

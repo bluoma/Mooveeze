@@ -17,15 +17,22 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     var jsonDownloader = JsonDownloader()
     var downloadTaskDict: [String:URLSessionDataTask] = [:]
     var moviesArray: [MovieSummaryDTO] = []
+    var filteredMoviesArray: [MovieSummaryDTO] = []
     var endpointPath: String = theMovieDbNowPlayingPath
     var isNetworkErrorShowing: Bool = false
     var header = UITableViewHeaderFooterView()
     var searchActive = false
-    var filteredMoviesArray: [MovieSummaryDTO] = []
+    var moviesRefreshControl: UIRefreshControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        moviesRefreshControl = UIRefreshControl()
+        moviesRefreshControl.addTarget(self, action: #selector(refreshControlAction(refreshControl:)), for: UIControlEvents.valueChanged)
+    
+        self.moviesTableView.insertSubview(moviesRefreshControl, at: 0)
+        
+        
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(gestureRecognizer:)))
         tapRecognizer.numberOfTapsRequired = 1
         tapRecognizer.numberOfTouchesRequired = 1
@@ -112,7 +119,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                 cell.moviePosterUrlString = imageUrlString
                 cell.movieThumbnailImageView.setImageWith(_:urlRequest, placeholderImage: nil,
                     success: { (request: URLRequest, response:HTTPURLResponse?, image: UIImage) -> Void in
-                        dlog("got image: \(image) for indexPath: \(indexPath), response: \(response)")
+                        //dlog("got image: \(image) for indexPath: \(indexPath), response: \(response)")
                         if imageUrlString == cell.moviePosterUrlString {
                             //if response == nil, image came from cache
                             if (response != nil) {
@@ -237,12 +244,12 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
             }
             return false
         })
-        if (filteredMoviesArray.count == 0){
-            searchActive = false;
-        }
-        else {
-            searchActive = true;
-        }
+        //if (filteredMoviesArray.count == 0){
+        //    searchActive = false;
+        //}
+        //else {
+        searchActive = true;
+        //}
         moviesTableView.reloadData()
     }
     
@@ -253,7 +260,28 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         moviesTableView.reloadData()
     }
     
+    //MARK: - UIScrollViewDelegate
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        //dlog("contentSize: \(scrollView.contentSize), contentOffset: \(scrollView.contentOffset)")
+    }
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        //dlog("contentSize: \(scrollView.contentSize), contentOffset: \(scrollView.contentOffset)")
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        //dlog("contentSize: \(scrollView.contentSize), contentOffset: \(scrollView.contentOffset)")
+    }
+
+    
     //MARK: - JsonDownloader
+    
+    func refreshControlAction(refreshControl: UIRefreshControl) {
+        dlog("");
+        //refreshControl.endRefreshing()
+        doDownload()
+    }
+
     
     func doDownload() {
         let currentlyPlayingUrlString = theMovieDbSecureBaseUrl + endpointPath + "?" + theMovieDbApiKeyParam
@@ -268,7 +296,9 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     func jsonDownloaderDidFinish(downloader: JsonDownloader, json: [String:AnyObject]?, response: HTTPURLResponse, error: NSError?)
     {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
-
+        if moviesRefreshControl.isRefreshing {
+            moviesRefreshControl.endRefreshing()
+        }
         if error != nil {
             dlog("err: \(error)")
             isNetworkErrorShowing = true
@@ -284,7 +314,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
                 for movieObj in results {
                     let movieDict: NSDictionary = movieObj as! NSDictionary
                     let movieDto: MovieSummaryDTO = MovieSummaryDTO(jsonDict: movieDict)
-                    dlog("movieDTO: \(movieDto)")
+                    //dlog("movieDTO: \(movieDto)")
                     resultsArray.append(movieDto)
                 }
                 moviesArray = resultsArray
@@ -322,5 +352,6 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
 
+    
 
 }
