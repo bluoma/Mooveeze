@@ -40,6 +40,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         jsonDownloader.delegate = self
         doDownload()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,6 +50,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {

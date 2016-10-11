@@ -12,40 +12,76 @@ Strong when a containing class needs to retain and own the property
 - What is optional chaining?
 - What is Any vs AnyObject vs NSObject?
 - What is the syntax for a property getter/setter?
+
 - What is a property observer?
+A property observer allows the developer to monitor changes to a stored property.
+Two optional methods are relevant here: willSet(newValue) { ... } and didSet(oldValue) { ... }.
 
 - What is a failable initializer?
-like an optional, can return nil if say a url string contains invalid characters.
+A failable initializer is like an optional function in that it can return nil 
+if input parameters are insufficient to make the class instance stable. For example,
+the URL class declares a failable initializer like so:
+public init?(string: String)
+When constructing a URL instance as above, it is typically necessary
+to use `guard let` or `if let` to unwrap the optional object.
 
 - What is a required vs convenience initializer?
-a convenience initializer calls self.init. a required initializer overrides a superclass init. calls super.init.
+An initializer marked with the `required` keyword must be overridden by every subclass.
+
+A convenience initializer must call a designated initializer for the class
+and perhaps pass in default parameters, which tends to shorten its signature.
+For example:
+class Engine {
+    let fuelType: String
+    let isHybrid: Bool
+    
+    init(fuelType: String, isHybrid: Bool) {
+        self.fuelType = fuelType
+        self.isHybrid = isHybrid
+    }
+    
+    convenience init(fuelType: String) {
+        self.init(fuelType: fuelType, isHybrid: false)
+    }
+}
+
+
 
 - What are the rules for initializers with respect to inheritance?
-From a post by Kevin McNeish: http://www.iphonelife.com/blog/31369/swift-101-demystifying-swifts-initializers-part-2
+
 If your subclass doesn't define any designated initializers, 
-it automatically inherits all of its superclass initializers.
+it automatically inherits all of its superclass's initializers.
 If your subclass provides an implementation of all of its superclass designated initializers--
 either by inheriting them as above, or by providing a custom implementation--
-then it automatically inherits all of the superclass convenience initializers.
-If your subclass declares its own designated initializer, it does not inherit the initializers of its superclass.
+then it automatically inherits all of the superclass's convenience initializers.
+Conversely, if your subclass defines its own designated initializer, 
+it does not inherit any initializers of its superclass.
 
 - What is an extension?
 An extension is similar to a category in objective C. 
-It adds functionality to a class you may not have the source code for.
+It adds functionality to a type (class, struct, enum, or protocol)
+that you may not have the source code for. However,
+extensions cannot override existing functionality.
 
 - What is guard & defer?
 The guard statement is for returning early from a function or breaking out of a loop
-if a variable declared with let or var can't be sensibly initialized. 
-The declared variable is in scope if the intialization succeeds. 
-A defer block is similar to finally statement in java. 
-The statement gets executed at the end of the function call
-just prior to return.
+if a variable declared with let or var can't be sensibly initialized. E.g.:
+guard let url = URL(string: urlString) else {
+	return //url was nil when tested, but is out of scope here
+}
+//url is in scope and not nil. 
+A defer block is similar to a finally statement in java. 
+The defer statement is guaranteed to be executed 
+at the end of a function call just prior to return.
 
 - When would you use a struct vs class?
 I would use structs for simple value types. 
 Structs are copied on assignment and when passed into functions.
-I would use classes for reference types so multiple copies of the same 'data' 
+I would use classes as reference-counted types so multiple copies of the same instance 'data' 
 are not created on assignment or when passed as paramaters into functions.
+Also, structs do not participate in the inheritance chain as classes do,
+nor do structs participate in the "deinit" mechanism of reference-counted types.
+
 
 - What scopes exist in Swift?
 global scope. local scope inside do { }

@@ -8,26 +8,68 @@
 
 import UIKit
 
-class MovieDetailViewController: UIViewController, UIScrollViewDelegate {
+class MovieDetailViewController: UIViewController, UIScrollViewDelegate, JsonDownloaderDelegate {
 
     @IBOutlet weak var backdropImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var overviewLabel: UILabel!
     @IBOutlet weak var contentScrollView: UIScrollView!
     @IBOutlet weak var bottomContainerView: UIView!
-    
+    @IBOutlet weak var releaseDateLabel: UILabel!
+    @IBOutlet weak var genreLabel: UILabel!
+    @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var runningTimeLabel: UILabel!
+
     
     
     var movieSummary: MovieSummaryDTO!
+    var movieDetailDict: [String:AnyObject]! {
+        didSet {
+            if let runtime = movieDetailDict["runtime"] as? Int {
+                
+                let hours = runtime / 60
+                let minutes = runtime % 60
+                
+                let runttimeString = "\(hours) hr \(minutes) min"
+                runningTimeLabel.text = runttimeString
+            }
+            if let tagline = movieDetailDict["tagline"] as? String {
+                dlog("runtime is: \(tagline)")
+                titleLabel.alpha = 0.0;
+                titleLabel.text = tagline
+                UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                    self.titleLabel.alpha = 1.0
+                })
+            }
+            if let genres = movieDetailDict["genres"] as? [[String:AnyObject]] {
+               
+                if !genres.isEmpty {
+                    if let firstGenre = genres[0]["name"] as? String {
+                        genreLabel.text = firstGenre
+                    }
+                }
+                
+            }
+            else {
+                dlog("no genres parsed")
+            }
+        }
+    }
+    var jsonDownloader = JsonDownloader()
+    var downloadTaskDict: [String:URLSessionDataTask] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
 
         self.title = movieSummary.title
-        titleLabel.text = movieSummary.title
+        titleLabel.text = ""
         overviewLabel.text = movieSummary.overview
         overviewLabel.sizeToFit()
+        
+        releaseDateLabel.text = movieSummary.releaseDate
+        ratingLabel.text = String(movieSummary.voteAverage)
+        
         
         contentScrollView.contentSize = CGSize(width: contentScrollView.frame.size.width, height: bottomContainerView.frame.origin.y + bottomContainerView.frame.size.height)
         
@@ -68,8 +110,21 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate {
             self.backdropImageView.image = defaultImage
         }
         
+        jsonDownloader.delegate = self
+        doDownload()
+        
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        cancelAllJsonDownloadTasks()
+    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -101,4 +156,61 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate {
         dlog("contentSize: \(scrollView.contentSize), contentOffset: \(scrollView.contentOffset)")
     }
     
+    
+    //MARK: - JsonDownloader
+    
+    func doDownload() {
+        let baseUrl = theMovieDbSecureBaseUrl + theMovieDbMovieDetailPath + "/"
+        let movieDetailUrlString = baseUrl + String(movieSummary.movieId) + "?" + theMovieDbApiKeyParam
+        cancelJsonDownloadTask(urlString: movieDetailUrlString)
+        if let task: URLSessionDataTask = jsonDownloader.doDownload(urlString: movieDetailUrlString) {
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
+            downloadTaskDict[movieDetailUrlString] = task
+        }
+        
+    }
+    
+    func jsonDownloaderDidFinish(downloader: JsonDownloader, json: [String:AnyObject]?, response: HTTPURLResponse, error: NSError?)
+    {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                if error != nil {
+            dlog("err: \(error)")
+            
+        }
+        else {
+                    
+            if let jsonObj: [String:AnyObject] = json {
+                dlog("jsonObj: \(type(of:jsonObj))")
+                movieDetailDict = jsonObj
+            }
+            else {
+                dlog("no json")
+                
+            }
+        }
+        if let urlString = response.url?.absoluteString {
+            dlog("url from response: \(urlString)")
+            downloadTaskDict[urlString] = nil
+        }
+    }
+    
+    func cancelJsonDownloadTask(urlString: String)
+    {
+        if let currentDowloadTask: URLSessionDataTask = downloadTaskDict[urlString] {
+            currentDowloadTask.cancel()
+            downloadTaskDict[urlString] = nil
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        }
+        
+    }
+    
+    func cancelAllJsonDownloadTasks()
+    {
+        for (_, task) in downloadTaskDict {
+            task.cancel()
+        }
+        downloadTaskDict.removeAll()
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
+
 }
