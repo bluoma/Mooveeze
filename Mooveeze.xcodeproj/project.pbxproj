@@ -175,6 +175,7 @@
 				TargetAttributes = {
 					F78088F11DA7560400438525 = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = M96UWZCD49;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -394,6 +395,7 @@
 			baseConfigurationReference = BCE217CC79B4A1553E05E21D /* Pods-Mooveeze.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = M96UWZCD49;
 				INFOPLIST_FILE = Mooveeze/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.identiifer.Mooveeze;
@@ -407,6 +409,7 @@
 			baseConfigurationReference = 251A8439F2A4175BA9ACC81D /* Pods-Mooveeze.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = M96UWZCD49;
 				INFOPLIST_FILE = Mooveeze/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.identiifer.Mooveeze;

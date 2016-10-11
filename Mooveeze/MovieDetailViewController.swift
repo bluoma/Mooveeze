@@ -20,16 +20,14 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, JsonDow
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var runningTimeLabel: UILabel!
 
-    
-    
+    var dateFormatter = DateFormatter()
     var movieSummary: MovieSummaryDTO!
+    
     var movieDetailDict: [String:AnyObject]! {
         didSet {
             if let runtime = movieDetailDict["runtime"] as? Int {
-                
                 let hours = runtime / 60
                 let minutes = runtime % 60
-                
                 let runttimeString = "\(hours) hr \(minutes) min"
                 runningTimeLabel.text = runttimeString
             }
@@ -42,19 +40,15 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, JsonDow
                 })
             }
             if let genres = movieDetailDict["genres"] as? [[String:AnyObject]] {
-               
                 if !genres.isEmpty {
                     if let firstGenre = genres[0]["name"] as? String {
                         genreLabel.text = firstGenre
                     }
                 }
-                
-            }
-            else {
-                dlog("no genres parsed")
             }
         }
     }
+    
     var jsonDownloader = JsonDownloader()
     var downloadTaskDict: [String:URLSessionDataTask] = [:]
     
@@ -62,14 +56,25 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, JsonDow
         super.viewDidLoad()
         // Do any additional setup after loading the view.
 
+        
+
         self.title = movieSummary.title
+        
         titleLabel.text = ""
+        runningTimeLabel.text = ""
+        ratingLabel.text = ""
+        genreLabel.text = ""
+        runningTimeLabel.text = ""
+        releaseDateLabel.text = ""
+        
         overviewLabel.text = movieSummary.overview
         overviewLabel.sizeToFit()
         
-        releaseDateLabel.text = movieSummary.releaseDate
-        ratingLabel.text = String(movieSummary.voteAverage)
-        
+        ratingLabel.text = String(movieSummary.voteAverage) + " / 10"
+        if let releaseDate = movieSummary.releaseDate {
+            dateFormatter.dateStyle = .medium
+            releaseDateLabel.text = dateFormatter.string(from: releaseDate)
+        }
         
         contentScrollView.contentSize = CGSize(width: contentScrollView.frame.size.width, height: bottomContainerView.frame.origin.y + bottomContainerView.frame.size.height)
         

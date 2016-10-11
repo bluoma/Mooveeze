@@ -14,7 +14,8 @@ class MovieSummaryDTO: CustomStringConvertible, CustomDebugStringConvertible {
     var title: String = ""
     var adult: Bool = false
     var overview: String = ""
-    var releaseDate: String = ""
+    var releaseDateString: String = ""
+    var releaseDate: Date?
     var genreIds: [Int] = []
     var originalTitle: String = ""
     var originalLanguage: String = ""
@@ -25,9 +26,10 @@ class MovieSummaryDTO: CustomStringConvertible, CustomDebugStringConvertible {
     var video: Bool = false
     var voteAverage: Double = 0.0
 
+    var dateFormatter = DateFormatter()
     
     init() {
-        
+        dateFormatter.dateFormat = "YYYY-MM-dd"
     }
     
     convenience init(jsonDict: NSDictionary) {
@@ -48,7 +50,8 @@ class MovieSummaryDTO: CustomStringConvertible, CustomDebugStringConvertible {
             self.overview = overview
         }
         if let releaseDate = jsonDict["release_date"] as? String {
-            self.releaseDate = releaseDate
+            self.releaseDateString = releaseDate
+            self.releaseDate = dateFormatter.date(from: releaseDateString)
         }
         if let genreIds = jsonDict["genre_ids"] as? [Int] {
             self.genreIds = genreIds
