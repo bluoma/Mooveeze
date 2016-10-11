@@ -1,0 +1,51 @@
+- When should a property be strong vs weak?
+Strong when a containing class needs to retain and own the property
+
+- Why do strong reference cycles cause a memory leak in Swift (and Objective-C), but not in Java?
+- What does it mean to "capture self" in a closure and why can it lead to a memory leak?
+- What is the syntax for a property that can store a closure?
+- What does inferred typing mean in Swift?
+- What is an implicitly unwrapped optional?
+- When would you use ? vs ! to unwrap an optional?
+- When casting, when would you use as? vs as!
+- What is another syntax for unwrapping an optional?
+- What is optional chaining?
+- What is Any vs AnyObject vs NSObject?
+- What is the syntax for a property getter/setter?
+- What is a property observer?
+
+- What is a failable initializer?
+like an optional, can return nil if say a url string contains invalid characters.
+
+- What is a required vs convenience initializer?
+a convenience initializer calls self.init. a required initializer overrides a superclass init. calls super.init.
+
+- What are the rules for initializers with respect to inheritance?
+From a post by Kevin McNeish: http://www.iphonelife.com/blog/31369/swift-101-demystifying-swifts-initializers-part-2
+If your subclass doesn't define any designated initializers, 
+it automatically inherits all of its superclass initializers.
+If your subclass provides an implementation of all of its superclass designated initializers--
+either by inheriting them as above, or by providing a custom implementation--
+then it automatically inherits all of the superclass convenience initializers.
+If your subclass declares its own designated initializer, it does not inherit the initializers of its superclass.
+
+- What is an extension?
+An extension is similar to a category in objective C. 
+It adds functionality to a class you may not have the source code for.
+
+- What is guard & defer?
+The guard statement is for returning early from a function or breaking out of a loop
+if a variable declared with let or var can't be sensibly initialized. 
+The declared variable is in scope if the intialization succeeds. 
+A defer block is similar to finally statement in java. 
+The statement gets executed at the end of the function call
+just prior to return.
+
+- When would you use a struct vs class?
+I would use structs for simple value types. 
+Structs are copied on assignment and when passed into functions.
+I would use classes for reference types so multiple copies of the same 'data' 
+are not created on assignment or when passed as paramaters into functions.
+
+- What scopes exist in Swift?
+global scope. local scope inside do { }
