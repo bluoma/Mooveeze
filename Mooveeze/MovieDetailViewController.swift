@@ -23,40 +23,12 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, JsonDow
     var dateFormatter = DateFormatter()
     var movieSummary: MovieSummaryDTO!
     
-    var movieDetailDict: [String:AnyObject]! {
-        didSet {
-            if let runtime = movieDetailDict["runtime"] as? Int {
-                let hours = runtime / 60
-                let minutes = runtime % 60
-                let runttimeString = "\(hours) hr \(minutes) min"
-                runningTimeLabel.text = runttimeString
-            }
-            if let tagline = movieDetailDict["tagline"] as? String {
-                dlog("runtime is: \(tagline)")
-                titleLabel.alpha = 0.0;
-                titleLabel.text = tagline
-                UIView.animate(withDuration: 0.3, animations: { () -> Void in
-                    self.titleLabel.alpha = 1.0
-                })
-            }
-            if let genres = movieDetailDict["genres"] as? [[String:AnyObject]] {
-                if !genres.isEmpty {
-                    if let firstGenre = genres[0]["name"] as? String {
-                        genreLabel.text = firstGenre
-                    }
-                }
-            }
-        }
-    }
-    
     var jsonDownloader = JsonDownloader()
     var downloadTaskDict: [String:URLSessionDataTask] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-
-        
 
         self.title = movieSummary.title
         
@@ -70,7 +42,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, JsonDow
         overviewLabel.text = movieSummary.overview
         overviewLabel.sizeToFit()
         
-        ratingLabel.text = String(movieSummary.voteAverage) + " / 10"
+        ratingLabel.text = String(movieSummary.voteAverage) + " / 10.00"
         if let releaseDate = movieSummary.releaseDate {
             dateFormatter.dateStyle = .medium
             releaseDateLabel.text = dateFormatter.string(from: releaseDate)
@@ -115,10 +87,14 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, JsonDow
             self.backdropImageView.image = defaultImage
         }
         
-        jsonDownloader.delegate = self
-        doDownload()
         
-        
+        if let movieDetails = movieSummary.movieDetail {
+            displayMovieDetails(details: movieDetails)
+        }
+        else {
+            jsonDownloader.delegate = self
+            doDownload()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -186,7 +162,13 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, JsonDow
                     
             if let jsonObj: [String:AnyObject] = json {
                 dlog("jsonObj: \(type(of:jsonObj))")
-                movieDetailDict = jsonObj
+                
+                let movieDetail = MovieDetailDTO(jsonDict: jsonObj as NSDictionary)
+                
+                dlog("movieDetail: \(movieDetail)")
+                
+                self.movieSummary.movieDetail = movieDetail
+                self.displayMovieDetails(details: movieDetail)
             }
             else {
                 dlog("no json")
@@ -217,5 +199,25 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, JsonDow
         downloadTaskDict.removeAll()
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
-
+    
+    func displayMovieDetails(details: MovieDetailDTO) -> Void {
+        
+        if details.runtime > 0 {
+            let hours = details.runtime / 60
+            let minutes = details.runtime % 60
+            let runttimeString = "\(hours) hr \(minutes) min"
+            runningTimeLabel.text = runttimeString
+        }
+        
+        if details.tagline.characters.count > 0 {
+            titleLabel.alpha = 0.0;
+            titleLabel.text = details.tagline
+            UIView.animate(withDuration: 0.3, animations: { () -> Void in
+                self.titleLabel.alpha = 1.0
+            })
+        }
+        if details.genres.count > 0 {
+            genreLabel.text = details.genres.first
+        }
+    }
 }

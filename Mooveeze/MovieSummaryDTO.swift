@@ -8,6 +8,52 @@
 
 import UIKit
 
+class MovieDetailDTO: CustomStringConvertible, CustomDebugStringConvertible {
+    
+    
+    var tagline: String = ""
+    var runtime: Int = 0
+    var homepage: String = ""
+    var genres: [String] = []
+    
+    
+    init() {
+        
+    }
+    
+    convenience init(jsonDict: NSDictionary) {
+        self.init()
+    
+        if let runtime = jsonDict["runtime"] as? Int {
+            self.runtime = runtime
+        }
+        if let tagline = jsonDict["tagline"] as? String {
+            self.tagline = tagline
+        }
+        if let homepage = jsonDict["homepage"] as? String {
+            self.homepage = homepage
+        }
+        if let genres = jsonDict["genres"] as? [[String:AnyObject]] {
+            for genre in genres {
+                
+                if let genreName = genre["name"] as? String {
+                    self.genres.append(genreName)
+                }
+            }
+        }
+    }
+
+    
+    var description: String {
+        return "tagline: \(tagline), runningTime: \(runtime), genres: \(genres), homepage: \(homepage)"
+    }
+    
+    var debugDescription: String {
+        return "tagline: \(tagline), runningTime: \(runtime), genres: \(genres), homepage: \(homepage)"
+    }
+
+}
+
 class MovieSummaryDTO: CustomStringConvertible, CustomDebugStringConvertible {
 
     var movieId: Int = -1
@@ -25,7 +71,7 @@ class MovieSummaryDTO: CustomStringConvertible, CustomDebugStringConvertible {
     var voteCount: Int = 0
     var video: Bool = false
     var voteAverage: Double = 0.0
-
+    var movieDetail: MovieDetailDTO? = nil
     var dateFormatter = DateFormatter()
     
     init() {
