@@ -91,7 +91,8 @@ class JsonDownloader {
             }
             else {
                 dlog("both data and error are nil")
-                returnedError = nil
+                let err: NSError = NSError(domain: "mooveeze", code: -800, userInfo: nil)
+                returnedError = err
             }
             
             DispatchQueue.main.async {

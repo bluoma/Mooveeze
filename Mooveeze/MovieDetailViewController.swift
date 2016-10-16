@@ -48,6 +48,11 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, JsonDow
             releaseDateLabel.text = dateFormatter.string(from: releaseDate)
         }
         
+        let bottomViewHeightDiff = bottomContainerView.frame.size.height - overviewLabel.frame.origin.y
+        if overviewLabel.frame.size.height > bottomViewHeightDiff {
+            bottomContainerView.frame.size.height += overviewLabel.frame.size.height - bottomViewHeightDiff + 16.0
+        }
+        
         contentScrollView.contentSize = CGSize(width: contentScrollView.frame.size.width, height: bottomContainerView.frame.origin.y + bottomContainerView.frame.size.height)
         
         if movieSummary.posterPath.characters.count > 0  {
@@ -135,6 +140,7 @@ class MovieDetailViewController: UIViewController, UIScrollViewDelegate, JsonDow
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         dlog("contentSize: \(scrollView.contentSize), contentOffset: \(scrollView.contentOffset)")
+        dlog("overViewSize: \(overviewLabel.frame.size)")
     }
     
     
