@@ -2,7 +2,7 @@
 
 **Mooveeze** is a movies app using the [The Movie Database API](http://docs.themoviedb.apiary.io/#).
 
-Time spent: **X** hours spent in total
+Time spent: **10** hours spent in total
 
 ## User Stories
 
@@ -26,7 +26,7 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [x] Shows movie genre and runtime via json fetch by movie
+- [x] Shows movie genre, tagline and runtime via json detail fetch by movieId
 
 ## Video Walkthrough
 
